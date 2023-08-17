@@ -1,6 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "../components/DefaultLayout";
 import GuestLayout from "../components/GuestLayout";
+import { PATH } from "../constants";
 import Dashboard from "../views/Dashboard";
 import Login from "../views/Login";
 import NotFound from "../views/NotFound";
@@ -9,35 +10,39 @@ import User from "../views/User";
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <GuestLayout />,
-        children: [
-            {
-                path: "/login",
-                element: <Login />,
-            },
-            {
-                path: "/register",
-                element: <Register />,
-            },
-        ],
-    },
-    {
-        path: "/",
+        path: PATH.ROOT,
         element: <DefaultLayout />,
         children: [
             {
-                path: "/dashboard",
+                path: PATH.ROOT,
+                element: <Navigate to={PATH.DASHBOARD} />,
+            },
+            {
+                path: PATH.DASHBOARD,
                 element: <Dashboard />,
             },
             {
-                path: "/user",
+                path: PATH.USER,
                 element: <User />,
             },
         ],
     },
     {
-        path: "*",
+        path: PATH.ROOT,
+        element: <GuestLayout />,
+        children: [
+            {
+                path: PATH.LOGIN,
+                element: <Login />,
+            },
+            {
+                path: PATH.REGISTER,
+                element: <Register />,
+            },
+        ],
+    },
+    {
+        path: PATH.ANY,
         element: <NotFound />,
     },
 ]);
