@@ -10,6 +10,7 @@ export const PATH = {
 export const API_PATH = {
     LOGIN: "/login",
     REGISTER: "/register",
+    USER: "/user",
 };
 
 export enum LOCAL_STORAGE_KEY {

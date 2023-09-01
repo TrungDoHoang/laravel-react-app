@@ -13,7 +13,7 @@ export const ContextProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [user, setUser] = useState<any>({ name: "" });
+    const [user, setUser] = useState<any>({});
     const [token, _setToken] = useState(
         localStorage.getItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN) ?? "",
     );

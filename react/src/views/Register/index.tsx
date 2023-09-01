@@ -15,6 +15,7 @@ const Register = () => {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        setErrors(undefined);
         const payload: registerPayload = {
             name: nameRef.current?.value || "",
             email: emailRef.current?.value || "",

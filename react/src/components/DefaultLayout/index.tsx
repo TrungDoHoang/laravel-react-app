@@ -1,9 +1,11 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { PATH } from "../../constants";
+import { useEffect } from "react";
+import { userApi } from "../../api/apis";
 
 const DefaultLayout = () => {
-    const { user, token, setToken } = useStateContext();
+    const { user, token, setToken, setUser } = useStateContext();
     const logoutHandler = (e: React.MouseEvent) => {
         e.preventDefault();
         setToken("");
@@ -12,6 +14,11 @@ const DefaultLayout = () => {
     if (!token) {
         return <Navigate to={PATH.LOGIN} />;
     }
+
+    useEffect(() => {
+        userApi().then((res) => setUser(res.data));
+    }, []);
+
     return (
         <div id="defaultLayout">
             <aside>
