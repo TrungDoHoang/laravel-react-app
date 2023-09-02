@@ -2,13 +2,22 @@ import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { PATH } from "../../constants";
 import { useEffect } from "react";
-import { userApi } from "../../api/apis";
+import { logoutApi, userApi } from "../../api/apis";
 
 const DefaultLayout = () => {
     const { user, token, setToken, setUser } = useStateContext();
     const logoutHandler = (e: React.MouseEvent) => {
         e.preventDefault();
-        setToken("");
+        logoutApi().then(() => {
+            setToken("");
+            setUser({
+                id: NaN,
+                name: "",
+                email: "",
+                created_at: "",
+                updated_at: "",
+            });
+        });
     };
 
     if (!token) {

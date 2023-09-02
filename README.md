@@ -74,3 +74,6 @@ password: abc123
 - php artisan make:controller Api/AuthController
 - php artisan make:request LoginRequest
 - php artisan make:request RegisterRequest
+- php artisan make:controller Api/UserController --model=User --resource --requests --api
+- php artisan make:resource UserResource
+- php artisan db:seed
