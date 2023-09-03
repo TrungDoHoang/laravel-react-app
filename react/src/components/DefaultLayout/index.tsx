@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { logoutApi, userApi } from "../../api/apis";
 
 const DefaultLayout = () => {
-    const { user, token, setToken, setUser } = useStateContext();
+    const { user, token, notification, setToken, setUser } = useStateContext();
     const logoutHandler = (e: React.MouseEvent) => {
         e.preventDefault();
         logoutApi().then(() => {
@@ -32,7 +32,7 @@ const DefaultLayout = () => {
         <div id="defaultLayout">
             <aside>
                 <Link to={PATH.DASHBOARD}>Dashboard</Link>
-                <Link to={PATH.USER}>User</Link>
+                <Link to={PATH.USERS}>Users</Link>
             </aside>
             <div className="content">
                 <header>
@@ -48,6 +48,8 @@ const DefaultLayout = () => {
                     <Outlet />
                 </main>
             </div>
+
+            {notification && <div className="notification">{notification}</div>}
         </div>
     );
 };

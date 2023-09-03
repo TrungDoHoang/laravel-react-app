@@ -3,8 +3,10 @@ import { UserI } from "../../type";
 import { deleteUserApi, getUsersApi } from "../../api/apis";
 import { Link } from "react-router-dom";
 import { PATH } from "../../constants";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 const Users = () => {
+    const { setNotification } = useStateContext();
     const [users, setUsers] = useState<UserI[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -26,6 +28,7 @@ const Users = () => {
         }
 
         deleteUserApi(u).then(() => {
+            setNotification("User was successfully deleted");
             getUsers();
         });
     };
@@ -43,7 +46,7 @@ const Users = () => {
                     alignItems: "center",
                 }}
             >
-                <h1>User</h1>
+                <h1>Users</h1>
                 <Link className="btn-add" to={PATH.ADD_USER}>
                     Add New User
                 </Link>
@@ -72,7 +75,7 @@ const Users = () => {
                     ) : (
                         <tbody>
                             {users.map((user) => (
-                                <tr>
+                                <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>

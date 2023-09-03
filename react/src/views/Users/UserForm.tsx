@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getUserApi } from "../../api/apis";
+import { useNavigate, useParams } from "react-router-dom";
+import { createUserApi, getUserApi, updateUserApi } from "../../api/apis";
 import { registerPayload } from "../../type";
+import { PATH } from "../../constants";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 const UserForm = () => {
     const { id } = useParams();
+    const nav = useNavigate();
+    const { setNotification } = useStateContext();
     const [user, setUser] = useState<registerPayload>({
         id: "",
         name: "",
@@ -17,6 +21,31 @@ const UserForm = () => {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (user.id) {
+            updateUserApi(user)
+                .then(() => {
+                    setNotification("User was successfully updated");
+                    nav(PATH.USERS);
+                })
+                .catch((err) => {
+                    const response = err.response;
+                    if (response && response.status === 422) {
+                        setErrors(response?.data?.errors);
+                    }
+                });
+        } else {
+            createUserApi(user)
+                .then(() => {
+                    nav(PATH.USERS);
+                    setNotification("User was successfully created");
+                })
+                .catch((err) => {
+                    const response = err.response;
+                    if (response && response.status === 422) {
+                        setErrors(response?.data?.errors);
+                    }
+                });
+        }
     };
 
     useEffect(() => {
@@ -71,7 +100,6 @@ const UserForm = () => {
                             }
                             type="email"
                             placeholder="Email"
-                            id=""
                         />
                         <input
                             onChange={(e) =>
@@ -79,7 +107,6 @@ const UserForm = () => {
                             }
                             type="password"
                             placeholder="Password"
-                            id=""
                         />
                         <input
                             onChange={(e) =>
@@ -91,7 +118,7 @@ const UserForm = () => {
                             type="password"
                             placeholder="Password Confirmation"
                         />
-                        <button className="btn btn-block">Save</button>
+                        <button className="btn">Save</button>
                     </form>
                 )}
             </div>

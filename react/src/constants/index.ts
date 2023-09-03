@@ -3,9 +3,9 @@ export const PATH = {
     ROOT: "/",
     LOGIN: "/login",
     REGISTER: "/register",
-    USER: "/user",
-    ADD_USER: "/user/add",
-    EDIT_USER: "/user/:id",
+    USERS: "/users",
+    ADD_USER: "/users/add",
+    EDIT_USER: "/users/:id",
     DASHBOARD: "/dashboard",
 };
 

@@ -17,9 +17,11 @@ export const getUsersApi = () => axiosClient.get(API_PATH.USERS);
 export const getUserApi = (id: string) =>
     axiosClient.get(API_PATH.USERS + `/${id}`);
 
-export const createUserApi = () => axiosClient.post(API_PATH.USERS);
+export const createUserApi = (u: registerPayload) =>
+    axiosClient.post(API_PATH.USERS, u);
 
-export const updateUserApi = () => axiosClient.put(API_PATH.USERS);
+export const updateUserApi = (u: registerPayload) =>
+    axiosClient.put(API_PATH.USERS + `/${u.id}`, u);
 
 export const deleteUserApi = (u: UserI) =>
     axiosClient.delete(API_PATH.USERS + `/${u.id}`);
